@@ -1,0 +1,70 @@
+/*
+RAJJ Engineering
+Full video on YouTube link :-
+https://youtu.be/VpP8uFPLqGU
+
+Code Link :-
+https://github.com/usmanrajj/Arduino_L298n
+*/
+// Define variables for the input pins and enable pin
+int in1 = 7; // Pin to control motor direction
+int in2 = 8; // Pin to control motor direction
+int ENA = 3; // Pin to control motor speed
+
+// Define a variable for the motor speed
+int speed = 0;
+
+// Set up the input and enable pins as outputs
+void setup() {
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+}
+
+// Loop through the motor movements
+void loop() {
+
+  // Move the motor forward
+  digitalWrite(in1, HIGH); // Set the direction of the motor to forward
+  digitalWrite(in2, LOW);
+  
+  // Increase the speed of the motor gradually until it reaches maximum speed
+  while(speed <= 255) {
+    analogWrite(ENA, speed); // Set the speed of the motor using PWM
+    speed++; // Increment the speed by 1
+    delay(15); // Wait for 15 milliseconds before the next iteration
+  }
+
+  // Wait for 2 seconds before reversing the motor direction
+  delay(2000);
+
+  // Decrease the speed of the motor gradually until it stops
+  while(speed > 0) {
+    analogWrite(ENA, speed);
+    speed--;
+    delay(15);
+  }
+  delay(2000);
+
+  // Move the motor backward
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH); // Set the direction of the motor to backward
+
+  // Increase the speed of the motor gradually until it reaches maximum speed
+  while(speed <= 255) {
+    analogWrite(ENA, speed);
+    speed++;
+    delay(15);
+  }
+
+  // Wait for 2 seconds before decreasing the motor speed
+  delay(2000);
+
+  // Decrease the speed of the motor gradually until it stops
+  while(speed > 0) {
+    analogWrite(ENA, speed);
+    speed--;
+    delay(15);
+  }
+  delay(2000);
+}
